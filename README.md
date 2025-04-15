@@ -68,18 +68,6 @@
 
 [![vhAstro-Theme](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/uxiaohan/vhAstro-Theme)
 
-### 使用命令拉取模板
-
-```bash
-# 使用 pnpm
-pnpm create astro@latest --template uxiaohan/vhAstro-Theme astro-blog
-# 或者 yarn
-yarn create astro --template uxiaohan/vhAstro-Theme astro-blog
-# 或者 npm
-npm create astro@latest -- --template uxiaohan/vhAstro-Theme astro-blog
-# 进入项目目录
-cd astro-blog
-```
 
 ### 本地开发
 
@@ -92,37 +80,6 @@ pnpm dev
 pnpm build
 # 创建新文章
 pnpm newpost '文章标题'
-```
-
-### ⚠️ Hexo 迁移 Astro 方法
-
-> 将 `Hexo` 博客的 `src/_posts/` 目录下的文章文件，复制到 `Astro` 的 `src/content/blog/` 目录下即可，然后自定义 `src/config.ts` 配置文件去自定义博客。<br>⚠️ `Hexo` 的部署、使用、自动化部署等方法 完全适用于 `Astro` 博客！<br>🎉 此时，你已成功迁移 Hexo 博客至 Astro 博客！
-
-## 🍬 特色页面
-
-### 友情链接
-
-```js
-// 配置文件 src/page_data/Link.ts
-export default {
-	// API 接口请求优先，数据格式保持和 data 一致
-	api: "",
-	// api 为空则使用 data 静态数据
-	data: [
-		{
-			name: "韩小韩博客",
-			link: "https://www.vvhan.com",
-			avatar: "https://q1.qlogo.cn/g?b=qq&nk=1655466387&s=640",
-			descr: "运气是计划之外的东西."
-		},
-		{
-			name: "韩小韩API",
-			link: "https://api.vvhan.com",
-			avatar: "https://api.vvhan.com/static/images/logo.webp",
-			descr: "免费Web API数据接口调用服务平台."
-		}
-	]
-};
 ```
 
 ### 说说动态
@@ -149,39 +106,6 @@ export default {
 };
 ```
 
-### 圈子（需部署 FreshRSS）
-
-```js
-// 配置文件 src/page_data/Friends.ts
-export default {
-	// API 接口请求优先，数据格式保持和 data 一致
-	api: "",
-	// api 为空则使用 data 静态数据
-	data: [
-		{
-			title: "Astro 中使用 Lenis 增加鼠标滚动阻尼感",
-			auther: "韩小韩博客",
-			date: "2025-03-06",
-			link: "https://www.vvhan.com/article/Lenis-in-Astro",
-			content: "在移动端触控交互中，惯性滚动带来的丝滑体验已成为标配，但鼠标滚轮受限于机械结构，滚动时难免产生生硬的段落感。如何让传统滚轮操作也能获得如触控板般的阻尼反馈？Lenis库通过JavaScript模拟惯性算法，成功将”物理惯性”引入网页滚动，本文将解析其实现原理与实战应用。"
-		},
-		{
-			title: "Astro 添加 Twikoo 评论组件",
-			auther: "韩小韩博客",
-			date: "2025-03-03",
-			link: "https://www.vvhan.com/article/astro-twikoo",
-			content: "Astro在使用视图过渡路由时，在跳转路由时，会导致JS文件只有在第一次进入页面时生效，所以Astro在使用视图过渡路由下Twikoo时无法正常使用的，我是单独写了一个评论组件，对Twikoo进行动态加载，然后在需要评论的页面引入的。"
-		},
-		{
-			title: "Astro主题-优雅的vhAstro-Theme【使用文档】",
-			auther: "韩小韩博客",
-			date: "2025-03-02",
-			link: "https://www.vvhan.com/article/astro-theme-vhastro-theme",
-			content: "🥝从Z-Blog到Emlog，从Typecho到Hexo，从动态博客到静态博客，作为一个前端，我深入了解了多种SSG工具，如Hexo、Vitepress、Hugo等，并最终锁定了Astro作为重构博客的选择。🍇Astro活跃的社区支持、广泛的现代框架兼容性、高效的性能优化、优秀的开发体验。"
-		}
-	]
-};
-```
 
 ## 📄 文章格式
 
@@ -226,8 +150,6 @@ comment: false # 关闭页面评论（默认开启）
 │   │   ├── archives                     => 归档页面
 │   │   ├── article                      => 文章页面
 │   │   ├── categories                   => 分类页面
-│   │   ├── friends                      => 圈子页面
-│   │   ├── links                        => 友链页面
 │   │   ├── message                      => 留言页面
 │   │   ├── tag                          => 标签页面
 │   │   ├── talking                      => 动态页面
@@ -251,17 +173,17 @@ comment: false # 关闭页面评论（默认开启）
 ## ⚙️ 项目配置
 ```js
 export default {
-  Title: '韩小韩博客',
+  Title: 'DEMURE✖️DEMURE',
   Site: 'https://www.vvhan.com',
   Subtitle: '不曾与你分享的时间,我在进步.',
-  Description: '韩小韩博客 专注于前开发与相关技术的实战分享，涵盖Vue框架、Node.js、Serverless等，并涉及Node、Python、Linux、Docker等领域。同时，博客也分享作者的生活、音乐和旅行的热爱。',
-  Author: '.𝙃𝙖𝙣',
-  Motto: '运气是计划之外的东西.',
+  Description: 'Demure博客 涵盖Vue框架、Node.js、Serverless等，并涉及Unity、JAVA、HTML、JavaScript、APP、Wechat小程序开发等领域。同时，博客也分享记录我的生活。',
+  Author: '.Demure',
+  Motto: '高山仰止，景行行止。.',
   Avatar: 'https://q1.qlogo.cn/g?b=qq&nk=1655466387&s=640',
   // Cover 网站缩略图
   Cover: '/assets/images/banner/072c12ec85d2d3b5.webp',
   // 网站创建时间
-  CreateTime: '2021-09-01',
+  CreateTime: '2024-06-29',
   // 首页打字机文案列表
   TypeWriteList: [
     '不曾与你分享的时间,我在进步.',
@@ -290,20 +212,16 @@ export default {
   Navs: [
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
-    { text: '朋友', link: '/links', icon: 'Nav_friends' },
-    { text: '圈子', link: '/friends', icon: 'Nav_rss' },
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
-    { text: 'API', link: 'https://api.vvhan.com/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
   WebSites: [
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
     { text: 'Github', link: 'https://github.com/uxiaohan', icon: 'WebSite_github' },
-    { text: '韩小韩API', link: 'https://api.vvhan.com', icon: 'WebSite_api' },
     { text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
     { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
     { text: 'HanAnalytics', link: 'https://analytics.vvhan.com', icon: 'WebSite_analytics' },
@@ -361,11 +279,3 @@ export default {
   }
 }
 ```
-
-## ✨ 反馈和建议
-
-如果您有任何建议/反馈，您可以通过我的 [电子邮件](mailto:1655466387@qq.com) 联系我。或者，如果您发现错误或想要请求新功能，请随时打开问题。
-
-## Stargazers over time
-
-![Stargazers over time](https://starchart.cc/uxiaohan/vhAstro-Theme.svg?variant=adaptive)
