@@ -10,11 +10,11 @@ export default {
   // 网站作者
   Author: '.Demure',
   // 作者头像
-  Avatar: 'https://q1.qlogo.cn/g?b=qq&nk=1655466387&s=640',
+  Avatar: 'https://i.imgur.com/8VoiNQ0.jpg',
   // 网站座右铭
   Motto: '高山仰止，景行行止。.',
   // Cover 网站缩略图
-  Cover: '/assets/images/banner/072c12ec85d2d3b5.webp',
+  Cover: '/assets/images/banner/76f5132dgy1hl3iw85zwbj215o2i5kjo.webp',
   // 网站侧边栏公告 (不填写即不开启)
   Tips: '<p>欢迎光临我的博客 🎉</p><p>这里会分享我的日常，希望能对你有所帮助:) 💖</p>',
   // 首页打字机文案列表
@@ -38,7 +38,7 @@ export default {
   Theme: {
     // 颜色请用 16 进制颜色码
     // 主题颜色
-    "--vh-main-color": "#01C4B6",
+    "--vh-main-color": "#eabfff",
     // 字体颜色
     "--vh-font-color": "#34495e",
     // 侧边栏宽度
@@ -52,8 +52,6 @@ export default {
   Navs: [
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可 <不需要文件后缀名>（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
-    // { text: '朋友', link: '/links', icon: 'Nav_friends' },
-    // { text: '圈子', link: '/friends', icon: 'Nav_rss' },
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     { text: '留言', link: '/message', icon: 'Nav_message' },
@@ -75,7 +73,7 @@ export default {
     // 是否展示个人网站
     WebSitesShow: true,
     // 是否展示分类
-    CategoriesShow: false,
+    CategoriesShow: true,
     // 是否展示标签
     TagsShow: true,
     // 是否展示推荐文章
@@ -96,13 +94,13 @@ export default {
   Comment: {
     // Twikoo 评论
     Twikoo: {
-      enable: true,
+      enable: false,
       envId: ''
     },
     // Waline 评论
     Waline: {
-      enable: false,
-      serverURL: ''
+      enable: true,
+      serverURL: 'https://your-waline-server-url', // Replace this with your actual Waline server URL
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）

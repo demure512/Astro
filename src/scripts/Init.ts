@@ -21,10 +21,6 @@ import vhLzImgInit from "@/scripts/vhLazyImg";
 import ViewImage from "@/scripts/ViewImage";
 // 底部网站运行时间
 import initWebSiteTime from "@/scripts/Footer";
-// 友情链接初始化
-import initLinks from "@/scripts/Links";
-// 朋友圈 RSS 初始化
-import initFriends from "@/scripts/Friends";
 // 动态说说初始化
 import initTalking from "@/scripts/Talking";
 // 文章评论初始化
@@ -65,10 +61,6 @@ const indexInit = async (only: boolean = true) => {
   videoInit(videoList);
   // 文章音乐播放器初始化
   musicInit(MusicList);
-  // 友情链接初始化
-  initLinks();
-  // 朋友圈 RSS 初始化
-  initFriends();
   // 动态说说初始化
   initTalking();
   // Google 广告

@@ -6,10 +6,6 @@
 
 在线演示 ➡️ [https://www.vvhan.com](https://www.vvhan.com)
 
-官方文档 ➡️ [vhAstro-Theme](https://www.vvhan.com/article/astro-theme-vhastro-theme)
-
-![Astro主题 vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2025/04/1743737394560.webp)
-
 ## ✨ 功能特性
 
 - [x] 简洁的响应式设计
@@ -181,7 +177,7 @@ export default {
   Motto: '高山仰止，景行行止。.',
   Avatar: 'https://q1.qlogo.cn/g?b=qq&nk=1655466387&s=640',
   // Cover 网站缩略图
-  Cover: '/assets/images/banner/072c12ec85d2d3b5.webp',
+  Cover: '/assets/images/banner/76f5132dgy1hl3iw85zwbj215o2i5kjo.webp',
   // 网站创建时间
   CreateTime: '2024-06-29',
   // 首页打字机文案列表
@@ -198,7 +194,7 @@ export default {
   Theme: {
     // 颜色请用 16 进制颜色码
     // 主题颜色
-    "--vh-main-color": "#01C4B6",
+    "--vh-main-color": "#eabfff",
     // 字体颜色
     "--vh-font-color": "#34495e",
     // 侧边栏宽度
