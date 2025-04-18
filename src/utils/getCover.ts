@@ -60,7 +60,21 @@ async function* createImageIterator(dir: string) {
 const targetDir = path.resolve(__dirname, '../../public/assets/images/banner/'); // 目标目录
 const fileIter = createImageIterator(targetDir);
 export default async (filename: string | null | undefined) => {
-  if (filename) return filename;
-  const { value } = await fileIter.next();
-  return SITE_INFO.Site + `/assets/images/banner/${value}`
+  // 如果提供了有效的URL，直接返回
+  if (filename && (filename.startsWith('http://') || filename.startsWith('https://'))) {
+    return filename;
+  }
+  // 如果提供了相对路径，但不是http开头的，可能是本地路径，直接返回
+  if (filename && filename.trim() !== '') {
+    return filename;
+  }
+  // 否则随机选择一个banner图片
+  try {
+    const { value } = await fileIter.next();
+    return `/assets/images/banner/${value}`;
+  } catch (error) {
+    console.error('获取随机图片失败:', error);
+    // 如果出错，返回默认图片
+    return '/assets/images/banner/home-banner.webp';
+  }
 }

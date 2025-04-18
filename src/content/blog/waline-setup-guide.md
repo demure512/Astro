@@ -9,7 +9,7 @@ tags:
 
 id: cloudflare-ip-dnspod-ddns
 cover: https://i.imgur.com/8ctkZR0.jpg
-recommend: true
+recommend: false
 ---
 
 :::note{type="info"}

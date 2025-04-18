@@ -3,7 +3,7 @@ title: "Astro主题-优雅的vhAstro-Theme【使用文档】"
 categories: Code
 tags: ["Astro", "主题", "博客", "vhAstro", "vhAstro-Theme"]
 id: "astro-theme-vhastro-theme"
-date: 2025-03-02 18:18:18
+date: 2024-12-02 18:18:18
 cover: "https://i0.wp.com/uxiaohan.github.io/v2/2025/04/1743737394560.webp"
 recommend: true
 top: true
@@ -74,17 +74,21 @@ export default {
 	// api 为空则使用 data 静态数据
 	// 注意：图片请用 vh-img-flex 类包裹
 	data: [
-		{
-			date: "2025-02-12 19:36:16",
-			tags: ["树", "夕阳"],
-			content: '好美🌲<p class="vh-img-flex"><img src="https://i0.wp.com/shp.qpic.cn/collector/1655466387/937ec070-8448-4c7b-9c8b-abd41ce892cb/0"></p>'
-		},
-		{
-			date: "2024-10-05 16:16:06",
-			tags: ["日常"],
-			content: "记录第一条说说"
-		}
-	]
+    {
+      "date": "2025-04-17 20:36:16",
+      "tags": [
+        "虚拟机"
+      ],
+      "content": "双端控制在玩mac虚拟机，刚设置以太网，我纳闷呢，我已经联网本机了怎么还不管用，一看！哎呀本机得了MVP！"
+    },
+    {
+      "date": "2024-12-09 16:16:06",
+      "tags": [
+        "日常"
+      ],
+      "content": "记录第一条说说"
+    }
+  ]
 };
 ```
 
