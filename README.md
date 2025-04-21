@@ -67,13 +67,15 @@
 
 ```bash
 # 安装依赖
-pnpm install
+npm install
 # 本地开发
-pnpm dev
+npm dev
 # 构建静态文件
-pnpm build
+npm build
 # 创建新文章
-pnpm newpost '文章标题'
+npm run newpost '文章标题'
+# 创建新东泰
+npm run newtalk '动态内容'
 ```
 
 ### 说说动态
@@ -104,7 +106,6 @@ export default {
 };
 ```
 
-
 ## 📄 文章格式
 
 ```md
@@ -126,6 +127,7 @@ type: "links" # 页面类型
 comment: false # 关闭页面评论（默认开启）
 ---
 ```
+
 
 ## ✅ Lighthouse
 

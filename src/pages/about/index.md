@@ -23,9 +23,8 @@ type: "about"
 
 **在游戏开发领域**，我专注于 Unity 引擎 和 C# 编程，深入研究了游戏物理、动画系统、Shader 编写以及性能优化。同时，熟练使用 Blender 进行 3D 建模，并掌握 Photoshop 进行贴图绘制与 UI 设计。此外，关注现代游戏开发工具链，如 Unreal Engine 的蓝图系统、Substance Painter 材质制作，以及 Git 版本控制和 Jenkins 自动化构建流程，致力于打造高质量、高性能的游戏体验。
 
-**在人工智能与大型语言模型（LLMs）领域**，我密切关注 AI 领域的发展，尤其是 DeepSeek、Gemini 和 Claude 等大模型的应用。我尝试将 AI 能力整合到开发流程中，例如自动化文档生成、代码优化辅助，并且对 多模态交互（如 LLaVA、GPT-4V） 和 AI 原生应用设计 保持高度敏感，致力于通过 AI 技术提升研发效率与产品智能化水平。。
+**在人工智能与大型语言模型（LLMs）领域**，我密切关注 AI 领域的发展，尤其是 DeepSeek、Gemini 和 Claude 等大模型的应用。我尝试将 AI 能力整合到开发流程中，例如自动化文档生成、代码优化辅助，并且对 多模态交互（如 LLaVA、GPT-4V） 和 AI 原生应用设计 保持高度敏感，致力于通过 AI 技术提升研发效率与产品智能化水平。
 
-**在网络与 DevOps 方面**，我熟悉 DNS 解析、CDN 加速、SSL 证书管理，并研究 TCP/IP、HTTP/3 等协议优化。我实践 Git 工作流、CI/CD 自动化（GitHub Actions / Cloudflare Pages），并利用 Docker 实现开发环境标准化。
 
 **🚀 技术理念**
 

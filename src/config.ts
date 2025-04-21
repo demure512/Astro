@@ -52,10 +52,10 @@ export default {
   Navs: [
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可 <不需要文件后缀名>（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
-    { text: '动态', link: '/talking', icon: 'Nav_talking' },
-    { text: '归档', link: '/archives', icon: 'Nav_archives' },
-    { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
+    { text: '动态', link: '/talking', icon: 'Nav_talking' },
+    { text: '留言', link: '/message', icon: 'Nav_message' },
+    { text: '归档', link: '/archives', icon: 'Nav_archives' },
     // { text: 'API', link: 'https://api.vvhan.com/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
@@ -100,7 +100,7 @@ export default {
     // Waline 评论
     Waline: {
       enable: true,
-      serverURL: 'https://your-waline-server-url', // Replace this with your actual Waline server URL
+      serverURL: 'https://waline-rho-ten-56.vercel.app/', // Replace this with your actual Waline server URL
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）

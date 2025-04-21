@@ -8,7 +8,9 @@ export default async (posts: any[]) => {
     return {
       title: i.data.title,
       url: `/article/${i.data.id}`,
-      content: `${i.data.title} - ` + $('body').text().replace(/\n/g, '').replace(/<[^>]+>/g, '')
+      content: `${i.data.title} - ` + $('body').text().replace(/\n/g, '').replace(/<[^>]+>/g, ''),
+      categories: i.data.categories || '',
+      tags: i.data.tags || []
     };
   });
 

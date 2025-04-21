@@ -7,8 +7,8 @@ tags:
   - 评论系统
   - 博客教程
 
-id: cloudflare-ip-dnspod-ddns
-cover: https://i.imgur.com/8ctkZR0.jpg
+id: waline
+cover: https://wp-cdn.4ce.cn/v2/lciK6Yq.png
 recommend: false
 ---
 
@@ -37,7 +37,7 @@ recommend: false
 
 ### 2. 配置数据存储
 
-Waline支持多种数据库用于存储评论数据：
+**Waline支持多种数据库用于存储评论数据：**
 
 - **LeanCloud**（推荐）
 - MongoDB
@@ -46,7 +46,7 @@ Waline支持多种数据库用于存储评论数据：
 - PostgreSQL
 - GitHub
 
-以LeanCloud为例：
+**以LeanCloud为例：**
 
 1. 注册并登录[LeanCloud国际版](https://leancloud.app/)
 2. 创建一个应用

@@ -3,10 +3,9 @@ title: "Astro主题-优雅的vhAstro-Theme【使用文档】"
 categories: Code
 tags: ["Astro", "主题", "博客", "vhAstro", "vhAstro-Theme"]
 id: "astro-theme-vhastro-theme"
-date: 2024-12-02 18:18:18
-cover: "https://i0.wp.com/uxiaohan.github.io/v2/2025/04/1743737394560.webp"
+date: 2025-1-02 18:18:18
+cover: "https://wp-cdn.4ce.cn/v2/glRPOSM.png"
 recommend: true
-top: true
 ---
 
 :::note{type="success"}
@@ -20,7 +19,7 @@ top: true
 
 **「当极简主义遇上工程之美」**
 
-![Astro主题 vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2025/04/1743737394560.webp)
+![Astro主题 vhAstro-Theme](https://wp-cdn.4ce.cn/v2/YpK3qJc.jpeg)
 
 
 
@@ -91,7 +90,20 @@ export default {
   ]
 };
 ```
+**脚本创建** - 添加一条默认带"日常"标签的说说
+```
+npm run newtalk "这是我的新动态内容"
+```
 
+**带自定义标签** - 添加一条带有自定义标签的说说
+```
+npm run newtalk "今天去爬山了，风景真美" -- --tags=旅行,风景
+```
+
+**添加带图片的动态** - 使用HTML标签添加图片：
+```
+npm run newtalk "看看我今天拍的风景 <div class=\"vh-img-flex\"><img src=\"https://your-image-url.jpg\" alt=\"风景照片\"></div>"
+```
 
 ## 📄 文章格式
 
