@@ -20,7 +20,7 @@ export default {
   // 首页打字机文案列表
   TypeWriteList: [
     '高山仰止，景行行止.',
-    "I am making progress in the time I haven't shared with you.",
+    "Make the future I want.",
   ],
   // 网站创建时间
   CreateTime: '2024-06-29',
@@ -100,7 +100,7 @@ export default {
     // Waline 评论
     Waline: {
       enable: true,
-      serverURL: 'https://waline-rho-ten-56.vercel.app/', // Replace this with your actual Waline server URL
+      serverURL: 'https://astrowaline.vercel.app/', // Replace this with your actual Waline server URL
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）

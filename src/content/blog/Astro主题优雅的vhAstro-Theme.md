@@ -46,10 +46,8 @@ recommend: true
 - [x] 分类
 - [x] 归档
 - [x] 动态
-- [x] 圈子
 - [x] 关于
 - [x] 留言板
-- [x] 友情链接
 - [x] 推荐文章
 - [x] 置顶文章
 - [x] 谷歌广告
@@ -74,11 +72,12 @@ export default {
 	// 注意：图片请用 vh-img-flex 类包裹
 	data: [
     {
-      "date": "2025-04-17 20:36:16",
+      "date": "2025-04-21 23:55:10",
       "tags": [
-        "虚拟机"
+        "测试",
+        "ES模块"
       ],
-      "content": "双端控制在玩mac虚拟机，刚设置以太网，我纳闷呢，我已经联网本机了怎么还不管用，一看！哎呀本机得了MVP！"
+      "content": "测试一下新建的脚本~"
     },
     {
       "date": "2024-12-09 16:16:06",
@@ -90,7 +89,7 @@ export default {
   ]
 };
 ```
-**脚本创建** - 添加一条默认带"日常"标签的说说
+**添加日常** - 添加一条默认带"日常"标签的说说
 ```
 npm run newtalk "这是我的新动态内容"
 ```
@@ -127,6 +126,11 @@ comment: false # 关闭页面评论（默认开启）
 ---
 ```
 
+**添加文章** - 添加标题文章
+```
+npm run newpost '添加文章标题'
+```
+
 
 ## ✅ Lighthouse
 
@@ -140,30 +144,29 @@ comment: false # 关闭页面评论（默认开启）
 ├── script              => 命令
 ├── src
 │   ├── components      => 组件
-│   ├── content
 │   │   └── blog        => 博客文章数据
-│   ├── layouts         => Layout 布局
-│   ├── page_data       => 页面数据
-│   ├── pages
-│   │   ├── about                        => 关于页面
-│   │   ├── archives                     => 归档页面
-│   │   ├── article                      => 文章页面
-│   │   ├── message                      => 留言页面
-│   │   ├── talking                      => 动态页面
-│   │   ├── [...page].astro              => 首页分页
-│   │   ├── 404.astro                    => 404页面
-│   │   ├── robots.txt.ts                => 爬虫文件
-│   │   └── rss.xml.ts                   => RSS文件
-│   ├── plugins             => 插件
-│   ├── scripts             => 脚本
-│   ├── styles              => 样式
-│   ├── type                => 类型
-│   ├── utils               => 工具
-│   ├── content.config.ts   => 内容配置
-│   ├── config.ts           => 配置
-├── tsconfig.json       => Typescript 配置
-├── astro.config.mjs    => Astro 配置
-├── package.json        => 依赖管理
+│   │   └── layouts         => Layout 布局
+│   │   └── page_data       => 页面数据
+│   │   └── pages
+│   │   │   ├── about                        => 关于页面
+│   │   │   ├── archives                     => 归档页面
+│   │   │   ├── article                      => 文章页面
+│   │   │   ├── message                      => 留言页面
+│   │   │   ├── talking                      => 动态页面
+│   │   │   ├── [...page].astro              => 首页分页
+│   │   │   ├── 404.astro                    => 404页面
+│   │   │   ├── robots.txt.ts                => 爬虫文件
+│   │   │   └── rss.xml.ts                   => RSS文件
+│   │   └── plugins             => 插件
+│   │   └── scripts             => 脚本
+│   │   └── styles              => 样式
+│   │   └── type                => 类型
+│   │   └── utils               => 工具
+│   │   └── content.config.ts   => 内容配置
+│   │   └── config.ts           => 配置
+│   ├── tsconfig.json       => Typescript 配置
+│   ├── astro.config.mjs    => Astro 配置
+│   └── package.json        => 依赖管理
 └── pnpm-lock.yaml      => 依赖锁定文件
 ```
 
@@ -173,26 +176,26 @@ comment: false # 关闭页面评论（默认开启）
 ### 文本加粗
 
 ```md
-那个男孩子 **气喘吁吁** 的打电话和你说：我在跑步
+学习编程的路上 **永不止步** ，每天都有新收获
 ```
 
-那个男孩子 **气喘吁吁** 的打电话和你说：我在跑步
+学习编程的路上 **永不止步** ，每天都有新收获
 
 ### 文本倾斜
 
 ```md
-你问他为什么有 _啪啪啪_ 的声音，他和你说：我是穿拖鞋跑步的
+_静静地思考_ 往往能够找到解决问题的最佳方案
 ```
 
-你问他为什么有 _啪啪啪_ 的声音，他和你说：我是穿拖鞋跑步的
+_静静地思考_ 往往能够找到解决问题的最佳方案
 
 ### 文本删除
 
 ```md
-你说，好的那你继续 ~~跑步~~ 吧
+这个功能我 ~~明天~~ 今天就能完成
 ```
 
-你说，好的那你继续 ~~跑步~~ 吧
+这个功能我 ~~明天~~ 今天就能完成
 
 ### 行内代码
 
@@ -232,26 +235,26 @@ comment: false # 关闭页面评论（默认开启）
 ### 超链接
 
 ```md
-[百度一下，你就懂了](https://www.baidu.com)
+[谷歌一下，你就懂了](http://google.com/)
 ```
 
-[百度一下，你就懂了](https://www.baidu.com)
+[谷歌一下，你就懂了](http://google.com/)
 
 ### 3 行 3 列的表格
 
 ```md
-| 表头 | 表头 | 表头 |
+| 框架 | 语言 | 特点 |
 | :--: | :--: | :--: |
-| 鸡头 | 鸭头 | 狗头 |
-| 鸡头 | 鸭头 | 狗头 |
-| 鸡头 | 鸭头 | 狗头 |
+| React | JavaScript | 组件化 |
+| Vue | JavaScript | 易上手 |
+| Astro | TypeScript | 高性能 |
 ```
 
-| 表头 | 表头 | 表头 |
+| 框架 | 语言 | 特点 |
 | :--: | :--: | :--: |
-| 鸡头 | 鸭头 | 狗头 |
-| 鸡头 | 鸭头 | 狗头 |
-| 鸡头 | 鸭头 | 狗头 |
+| React | JavaScript | 组件化 |
+| Vue | JavaScript | 易上手 |
+| Astro | TypeScript | 高性能 |
 
 ### 代码块
 
@@ -385,16 +388,16 @@ $\cup$、$\cap$、$\in$、$\notin$、$\ni$、$\subset$、$\subseteq$、$\supset$
 
 ```md
 :::picture
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
+![Astro](https://wp-cdn.4ce.cn/v2/mpjwleN.jpeg)
+![Astro](https://wp-cdn.4ce.cn/v2/wTVw1rS.jpeg)
+![Astro](https://wp-cdn.4ce.cn/v2/O1KlGx8.jpeg)
 :::
 ```
 
 :::picture
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
-![Astro主题-vhAstro-Theme](https://i0.wp.com/uxiaohan.github.io/v2/2023/03/42944511.png)
+![Astro](https://wp-cdn.4ce.cn/v2/mpjwleN.jpeg)
+![Astro](https://wp-cdn.4ce.cn/v2/wTVw1rS.jpeg)
+![Astro](https://wp-cdn.4ce.cn/v2/O1KlGx8.jpeg)
 :::
 
 ### LivePhoto 组件

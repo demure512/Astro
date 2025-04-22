@@ -4,7 +4,7 @@
 
 **「当极简主义遇上工程之美」**
 
-在线演示 ➡️ [https://www.vvhan.com](https://www.vvhan.com)
+在线演示 ➡️ [https://demure.pages.dev](https://demure.pages.dev)
 
 ## ✨ 功能特性
 
@@ -45,22 +45,21 @@
 
 ## 🚀 使用方法
 
-### 使用 Github 模板
+### 使用 Github 
 
-- 使用此模板 [生成新仓库或 Fork 此仓库](https://github.com/new?template_name=vhAstro-Theme&template_owner=uxiaohan)
-- 进行本地开发，Clone 新的仓库，执行 `pnpm install` 以安装依赖
-- 若未安装 [pnpm](https://pnpm.io)，执行 `npm install -g pnpm`
+- 进行本地开发，Clone 新的仓库，执行 `npm install` 以安装依赖
 - 通过配置文件 `src/config.ts` 自定义博客
-- 执行 pnpm newpost '文章标题' 创建新文章，并在 src/content/posts/ 目录中编辑
+- 执行 npm newpost '文章标题' 创建新文章，并在 src/content/posts/ 目录中编辑
+- 执行 npm newtalk '动态内容' 创建新动态，并在 src/content/page_data/ 中编辑
 - 参考官方指南将博客部署至 Vercel, Netlify,Cloudflare Pages, GitHub Pages 等
 
 ### Vercel 自动部署
 
-[![vhAstro-Theme](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/uxiaohan/vhAstro-Theme)
+[![vhAstro-Theme](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/demure512/Astro)
 
 ### Cloudflare Pages 自动部署
 
-[![vhAstro-Theme](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/uxiaohan/vhAstro-Theme)
+[![vhAstro-Theme](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/demure512/Astro)
 
 
 ### 本地开发
@@ -89,11 +88,12 @@ export default {
 	// 注意：图片请用 vh-img-flex 类包裹
 	data: [
     {
-      "date": "2025-04-17 20:36:16",
+      "date": "2025-04-21 23:55:10",
       "tags": [
-        "虚拟机"
+        "测试",
+        "ES模块"
       ],
-      "content": "双端控制在玩mac虚拟机，刚设置以太网，我纳闷呢，我已经联网本机了怎么还不管用，一看！哎呀本机得了MVP！"
+      "content": "测试一下新建的脚本~"
     },
     {
       "date": "2024-12-09 16:16:06",
@@ -141,41 +141,40 @@ comment: false # 关闭页面评论（默认开启）
 ├── script              => 命令
 ├── src
 │   ├── components      => 组件
-│   ├── content
 │   │   └── blog        => 博客文章数据
-│   ├── layouts         => Layout 布局
-│   ├── page_data       => 页面数据
-│   ├── pages
-│   │   ├── about                        => 关于页面
-│   │   ├── archives                     => 归档页面
-│   │   ├── article                      => 文章页面
-│   │   ├── categories                   => 分类页面
-│   │   ├── message                      => 留言页面
-│   │   ├── tag                          => 标签页面
-│   │   ├── talking                      => 动态页面
-│   │   ├── [...page].astro              => 首页分页
-│   │   ├── 404.astro                    => 404页面
-│   │   ├── robots.txt.ts                => 爬虫文件
-│   │   └── rss.xml.ts                   => RSS文件
-│   ├── plugins             => 插件
-│   ├── scripts             => 脚本
-│   ├── styles              => 样式
-│   ├── type                => 类型
-│   ├── utils               => 工具
-│   ├── content.config.ts   => 内容配置
-│   ├── config.ts           => 配置
-├── tsconfig.json       => Typescript 配置
-├── astro.config.mjs    => Astro 配置
-├── package.json        => 依赖管理
-└── pnpm-lock.yaml      => 依赖锁定文件
+│   │   ├── layouts         => Layout 布局
+│   │   ├── page_data       => 页面数据
+│   │   ├── pages
+│   │   │   ├── about                        => 关于页面
+│   │   │   ├── archives                     => 归档页面
+│   │   │   ├── article                      => 文章页面
+│   │   │   ├── categories                   => 分类页面
+│   │   │   ├── message                      => 留言页面
+│   │   │   ├── tag                          => 标签页面
+│   │   │   ├── talking                      => 动态页面
+│   │   │   ├── [...page].astro              => 首页分页
+│   │   │   ├── 404.astro                    => 404页面
+│   │   │   ├── robots.txt.ts                => 爬虫文件
+│   │   │   └── rss.xml.ts                   => RSS文件
+│   │   ├── plugins             => 插件
+│   │   ├── scripts             => 脚本
+│   │   ├── styles              => 样式
+│   │   ├── type                => 类型
+│   │   ├── utils               => 工具
+│   │   ├── content.config.ts   => 内容配置
+│   │   ├── config.ts           => 配置
+│   ├── tsconfig.json       => Typescript 配置
+│   ├── astro.config.mjs    => Astro 配置
+│   ├── package.json        => 依赖管理
+│   └── pnpm-lock.yaml      => 依赖锁定文件
 ```
 
 ## ⚙️ 项目配置
 ```js
 export default {
   Title: 'DEMURE✖️DEMURE',
-  Site: 'https://www.vvhan.com',
-  Subtitle: '不曾与你分享的时间,我在进步.',
+  Site: 'https://demure.pages.dev',
+  Subtitle: '高山仰止，景行行止。',
   Description: 'Demure博客 涵盖Vue框架、Node.js、Serverless等，并涉及Unity、JAVA、HTML、JavaScript、APP、Wechat小程序开发等领域。同时，博客也分享记录我的生活。',
   Author: '.Demure',
   Motto: '高山仰止，景行行止。.',
@@ -186,8 +185,8 @@ export default {
   CreateTime: '2024-06-29',
   // 首页打字机文案列表
   TypeWriteList: [
-    '不曾与你分享的时间,我在进步.',
-    "I am making progress in the time I haven't shared with you.",
+    '高山仰止，景行行止。',
+    "Make the future I want.",
   ],
   // 顶部 Banner 配置
   HomeBanner: {
