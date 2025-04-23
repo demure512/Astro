@@ -10,7 +10,7 @@ export default {
   // 网站作者
   Author: '.Demure',
   // 作者头像
-  Avatar: 'https://i.imgur.com/8VoiNQ0.jpg',
+  Avatar: 'https://wp-cdn.4ce.cn/v2/V6GuCJe.jpeg',
   // 网站座右铭
   Motto: '高山仰止，景行行止。.',
   // Cover 网站缩略图
@@ -32,7 +32,7 @@ export default {
     // 其他页面高度
     PageHeight: '28.88rem',
     // 背景
-    background: "url('/assets/images/home-banner.webp') no-repeat center 60%/cover",
+    background: "url('https://wp-cdn.4ce.cn/v2/qPc53eX.png') no-repeat center 60%/cover",
   },
   // 博客主题配置
   Theme: {
