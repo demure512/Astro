@@ -5,6 +5,9 @@ const { Navs, Title } = SITE_CONFIG;
 import Svg from "@/components/Svg/Svg.astro";
 // 侧边栏 MobileSidebar 样式
 import "./MobileSidebar.less";
+
+// Get current path from Astro
+const currentPath = Astro.url.pathname;
 ---
 
 <nav class="vh-mobilesidebar">
@@ -15,13 +18,62 @@ import "./MobileSidebar.less";
 
 		<div class="vh-mobilesidebar-list vh-link-list">
 			{
-				Navs.map(i => (
-					<a class={i.link.replace("/", "")} href={i.link} target={i.target ? "_blank" : "_self"}>
-						<Svg src={i.icon} />
-						{i.text}
-					</a>
-				))
+				Navs.map(i => {
+					// For the exact match (remove trailing slash from both for comparison)
+					const cleanCurrentPath = currentPath.endsWith('/') ? currentPath.slice(0, -1) : currentPath;
+					const cleanItemPath = i.link.endsWith('/') ? i.link.slice(0, -1) : i.link;
+					const isActive = cleanCurrentPath === cleanItemPath || 
+								   (cleanItemPath !== '/' && cleanCurrentPath.startsWith(cleanItemPath));
+					
+					return (
+						<a 
+							class={`${i.link.replace("/", "")} ${isActive ? "active" : ""}`} 
+							href={i.link} 
+							target={i.target ? "_blank" : "_self"}
+						>
+							<Svg src={i.icon} />
+							{i.text}
+						</a>
+					);
+				})
 			}
 		</div>
 	</section>
 </nav>
+
+<script>
+	// When the page loads, log current path to help debug
+	document.addEventListener('DOMContentLoaded', () => {
+		console.log('Current pathname:', window.location.pathname);
+		
+		// Add click handlers for mobile sidebar links
+		document.querySelectorAll('.vh-mobilesidebar-list.vh-link-list a').forEach(link => {
+			link.addEventListener('click', (e) => {
+				// Remove active class from all links
+				document.querySelectorAll('.vh-mobilesidebar-list.vh-link-list a').forEach(l => {
+					l.classList.remove('active');
+				});
+				
+				// Add active class to clicked link
+				link.classList.add('active');
+			});
+		});
+	});
+
+	// Toggle mobile dropdown menu
+	document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+		toggle.addEventListener('click', (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			const dropdown = toggle.closest('.mobile-dropdown');
+			dropdown.classList.toggle('open');
+		});
+	});
+
+	// Prevent dropdown menu from closing when clicking its items
+	document.querySelectorAll('.mobile-dropdown-menu').forEach(menu => {
+		menu.addEventListener('click', (e) => {
+			e.stopPropagation();
+		});
+	});
+</script>

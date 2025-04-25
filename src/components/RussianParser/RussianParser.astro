@@ -1,0 +1,503 @@
+---
+// 引入样式文件
+import './RussianParser.less';
+---
+
+<div class="russian-parser">
+  <div class="russian-parser__container">
+    <div class="input-area">
+      <h3>输入文本</h3>
+      <textarea id="russianText" placeholder="请输入文本..."></textarea>
+      <div class="input-buttons">
+      <button id="parseButton">解析文本</button>
+        <button id="saveButton">保存到歌单</button>
+      </div>
+      <div class="song-input" style="display: none;">
+        <input type="text" id="songTitle" placeholder="输入歌曲名称" />
+        <button id="confirmSaveButton">确认</button>
+        <button id="cancelSaveButton">取消</button>
+      </div>
+    </div>
+    
+    <div class="song-list-area">
+      <h3>我的歌单</h3>
+      <div class="song-list-container">
+        <div id="songList" class="song-list"></div>
+      </div>
+    </div>
+    
+    <div class="output-area">
+      <h3>文本解析结果</h3>
+      <div id="wordOutput" class="word-output"></div>
+      <div id="sentenceOutput" class="sentence-output"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/RussianParser.js" is:inline></script>
+
+<script>
+  // Initialize Web Speech API
+  const synth = window.speechSynthesis;
+  
+  // DOM elements
+  const russianText = document.getElementById('russianText');
+  const parseButton = document.getElementById('parseButton');
+  const saveButton = document.getElementById('saveButton');
+  const songInput = document.querySelector('.song-input');
+  const songTitle = document.getElementById('songTitle');
+  const confirmSaveButton = document.getElementById('confirmSaveButton');
+  const cancelSaveButton = document.getElementById('cancelSaveButton');
+  const songList = document.getElementById('songList');
+  // const wordOutput = document.getElementById('wordOutput');
+  const sentenceOutput = document.getElementById('sentenceOutput');
+
+  // Speaker SVG icon HTML
+  const speakerIconSvg = `<svg class="speaker-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zm5.54 3.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+  // Delete icon HTML
+  const deleteIconSvg = `<svg class="delete-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+
+  // Initialize songs from local storage
+  function loadSongs() {
+    const savedSongs = localStorage.getItem('russianSongs');
+    return savedSongs ? JSON.parse(savedSongs) : [];
+  }
+
+  // Save songs to local storage
+  function saveSongs(songs) {
+    localStorage.setItem('russianSongs', JSON.stringify(songs));
+  }
+
+  // Render the song list
+  function renderSongList() {
+    const songs = loadSongs();
+    
+    if (songs.length === 0) {
+      songList.innerHTML = '<p class="empty-message">还没有保存的歌曲</p>';
+      return;
+    }
+    
+    songList.innerHTML = '';
+    
+    songs.forEach((song, index) => {
+      const songElement = document.createElement('div');
+      songElement.className = 'song-item';
+      songElement.innerHTML = `
+        <span class="song-title">${song.title}</span>
+        <span class="song-actions">
+          <button class="play-song-btn" data-index="${index}" aria-label="播放歌曲">${speakerIconSvg}</button>
+          <button class="delete-song-btn" data-index="${index}" aria-label="删除歌曲">${deleteIconSvg}</button>
+        </span>
+      `;
+      songList.appendChild(songElement);
+    });
+    
+    // Add event listeners for song actions
+    document.querySelectorAll('.play-song-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const index = e.currentTarget.getAttribute('data-index');
+        const songs = loadSongs();
+        const song = songs[index];
+        
+        // Load the song text into the textarea
+        russianText.value = song.text;
+        
+        // Parse the text
+        parseText();
+      });
+    });
+    
+    document.querySelectorAll('.delete-song-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const index = e.currentTarget.getAttribute('data-index');
+        const songs = loadSongs();
+        
+        // Remove the song
+        songs.splice(index, 1);
+        saveSongs(songs);
+        
+        // Update the UI
+        renderSongList();
+      });
+    });
+  }
+
+  // Function to add a new song
+  function addSong(title, text) {
+    const songs = loadSongs();
+    
+    // Check if a song with this title already exists
+    const existingIndex = songs.findIndex(song => song.title === title);
+    
+    if (existingIndex >= 0) {
+      // Update existing song
+      songs[existingIndex].text = text;
+    } else {
+      // Add new song
+      songs.push({ title, text });
+    }
+    
+    saveSongs(songs);
+    renderSongList();
+  }
+
+  // Function to parse the text
+  function parseText() {
+    const text = russianText.value;
+    
+    if (text.trim().length === 0) {
+      alert('请输入俄语文本');
+      return;
+    }
+    
+    const words = parseWords(text);
+    const sentences = parseSentences(text);
+    
+    renderWords(words);
+    renderSentences(sentences);
+  }
+
+  // Event handler for parse button
+  parseButton.addEventListener('click', parseText);
+
+  // Event handler for save button
+  saveButton.addEventListener('click', () => {
+    if (russianText.value.trim().length === 0) {
+      alert('请先输入文本再保存');
+      return;
+    }
+    
+    // Show the song input form
+    songInput.style.display = 'flex';
+    songTitle.focus();
+  });
+
+  // Event handler for confirm save button
+  confirmSaveButton.addEventListener('click', () => {
+    const title = songTitle.value.trim();
+    const text = russianText.value.trim();
+    
+    if (title.length === 0) {
+      alert('请输入歌曲名称');
+      return;
+    }
+    
+    // Save the song
+    addSong(title, text);
+    
+    // Hide the song input form
+    songInput.style.display = 'none';
+    songTitle.value = '';
+  });
+
+  // Event handler for cancel save button
+  cancelSaveButton.addEventListener('click', () => {
+    // Hide the song input form
+    songInput.style.display = 'none';
+    songTitle.value = '';
+  });
+
+  // Initialize the parser
+  function initRussianParser() {
+    // Render the song list
+    renderSongList();
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', initRussianParser);
+</script>
+
+<style>
+  .russian-parser {
+    margin: 2rem 0;
+    width: 100%;
+  }
+
+  .russian-parser__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: var(--vh-main-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-area, .output-area, .song-list-area {
+    width: 100%;
+  }
+
+  .input-area h3, .output-area h3, .song-list-area h3 {
+    margin-bottom: 1rem;
+    color: var(--vh-font-color);
+  }
+
+  .output-area h4 {
+    margin-bottom: 0.5rem;
+    color: var(--vh-font-color);
+    font-weight: 600;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: var(--vh-main-radius);
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+  }
+
+  .input-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    background-color: var(--vh-main-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--vh-main-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #d9abf9;
+  }
+
+  .song-input {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .song-input input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: var(--vh-main-radius);
+    font-size: 1rem;
+  }
+
+  .song-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .song-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .song-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+  }
+
+  .song-item:hover {
+    background-color: rgba(234, 191, 255, 0.1);
+  }
+
+  .song-item:last-child {
+    border-bottom: none;
+  }
+
+  .song-title {
+    font-weight: 500;
+  }
+
+  .song-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .play-song-btn, .delete-song-btn {
+    background-color: transparent;
+    color: #666;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .play-song-btn {
+    background-color: var(--vh-main-color);
+    color: white;
+  }
+
+  .delete-song-btn:hover {
+    background-color: #ff4d4d;
+    color: white;
+  }
+
+  .play-song-btn:hover {
+    transform: scale(1.1);
+    background-color: #d078ff;
+  }
+
+  .empty-message {
+    padding: 1rem;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+  }
+
+  .word-output, .sentence-output {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .word, .sentence-word {
+    display: inline-block;
+    padding: 0.3rem 0.5rem;
+    margin: 0.25rem;
+    background-color: rgba(234, 191, 255, 0.2);
+    border-radius: 0.35rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  
+  .sentence-word {
+    margin: 0.1rem 0.2rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .word:hover, .sentence-word:hover {
+    background-color: var(--vh-main-color);
+    color: white;
+  }
+  
+  .word.active, .sentence-word.active {
+    background-color: var(--vh-main-color);
+    color: white;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--vh-main-color);
+  }
+
+  .sentence-container {
+    display: flex;
+    align-items: center;
+    margin: 0.6rem 0;
+    padding: 0.6rem 0.7rem;
+    background-color: rgba(234, 191, 255, 0.1);
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+
+  .sentence-container:hover {
+    background-color: rgba(234, 191, 255, 0.2);
+  }
+
+  .speaker-button {
+    background-color: var(--vh-main-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    padding: 0;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .speaker-button:hover {
+    transform: scale(1.1);
+    background-color: #d078ff;
+  }
+
+  .speaker-button.active {
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .speaker-icon, .delete-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sentence-text {
+    flex: 1;
+    line-height: 1.5;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .word-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .word-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+  }
+
+  @media (max-width: 768px) {
+    .russian-parser__container {
+      padding: 1rem;
+    }
+    
+    .sentence-container {
+      padding: 0.6rem;
+    }
+    
+    .input-buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .song-input {
+      flex-direction: column;
+    }
+  }
+</style> 

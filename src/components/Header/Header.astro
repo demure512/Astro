@@ -10,6 +10,9 @@ import Svg from "@/components/Svg/Svg.astro";
 import Search from "@/components/Search/Search.astro";
 // 顶部 Header 样式
 import "./Header.less";
+
+// Get current path from Astro for exact matching
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="vh-header">
@@ -20,12 +23,20 @@ import "./Header.less";
 		</a>
 		<nav>
 			{
-				Navs.map(i => (
-					<a class={`nav-link vh-hover${i.link.includes(activeNav) ? " active" : ""}`} href={i.link} target={i.target ? "_blank" : "_self"}>
-						{i.text}
-						<Svg src={i.icon} />
-					</a>
-				))
+				Navs.map(i => {
+					// For the exact match (remove trailing slash from both for comparison)
+					const cleanCurrentPath = currentPath.endsWith('/') ? currentPath.slice(0, -1) : currentPath;
+					const cleanItemPath = i.link.endsWith('/') ? i.link.slice(0, -1) : i.link;
+					const isActive = cleanCurrentPath === cleanItemPath || 
+								   (cleanItemPath !== '/' && cleanCurrentPath.startsWith(cleanItemPath));
+					
+					return (
+						<a class={`nav-link vh-hover${isActive ? " active" : ""}`} href={i.link} target={i.target ? "_blank" : "_self"}>
+							{i.text}
+							<Svg src={i.icon} />
+						</a>
+					);
+				})
 			}
 			<span class="nav-link vh-hover search-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg> 搜索</span>
 			<span class="nav-link vh-hover menu-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6h16"></path><path d="M7 12h13"></path><path d="M10 18h10"></path></svg></span>
@@ -33,3 +44,100 @@ import "./Header.less";
 		<Search />
 	</section>
 </header>
+
+<script>
+	// When the page loads, update active states based on current path
+	document.addEventListener('DOMContentLoaded', updateActiveNavs);
+	document.addEventListener('astro:page-load', updateActiveNavs);
+	
+	function updateActiveNavs() {
+		const currentPath = window.location.pathname;
+		console.log('Current pathname in header:', currentPath);
+		
+		// Update active state for navigation links
+		document.querySelectorAll('.vh-header .nav-link').forEach(link => {
+			// Skip search and menu buttons
+			if (link.classList.contains('search-btn') || link.classList.contains('menu-btn')) {
+				return;
+			}
+			
+			const href = link.getAttribute('href');
+			if (!href) return;
+			
+			// Clean paths for comparison
+			const cleanCurrentPath = currentPath.endsWith('/') ? currentPath.slice(0, -1) : currentPath;
+			const cleanItemPath = href.endsWith('/') ? href.slice(0, -1) : href;
+			
+			// Check if this link should be active
+			const isActive = cleanCurrentPath === cleanItemPath || 
+						   (cleanItemPath !== '/' && cleanCurrentPath.startsWith(cleanItemPath));
+			
+			if (isActive) {
+				link.classList.add('active');
+			} else {
+				link.classList.remove('active');
+			}
+		});
+	}
+	
+	// 页面加载完成后执行初始化
+	document.addEventListener('DOMContentLoaded', initializeHeader);
+	
+	// 当页面通过前端路由切换时，可能需要重新初始化
+	document.addEventListener('astro:page-load', initializeHeader);
+	
+	function initializeHeader() {
+		// 清除可能存在的旧事件监听器
+		const dropdowns = document.querySelectorAll('.dropdown');
+		
+		// 为所有下拉菜单添加点击事件
+		dropdowns.forEach(dropdown => {
+			// 确保事件不会重复绑定
+			dropdown.removeEventListener('click', dropdownClickHandler);
+			dropdown.addEventListener('click', dropdownClickHandler);
+			
+			// 为下拉按钮单独添加事件处理
+			const toggle = dropdown.querySelector('.dropdown-toggle');
+			if (toggle) {
+				toggle.removeEventListener('click', toggleClickHandler);
+				toggle.addEventListener('click', toggleClickHandler);
+			}
+		});
+		
+		// 确保点击文档其他位置时关闭下拉菜单
+		document.removeEventListener('click', documentClickHandler);
+		document.addEventListener('click', documentClickHandler);
+		
+		// 确保下拉菜单中的链接正常工作
+		document.querySelectorAll('.dropdown-item').forEach(item => {
+			item.removeEventListener('click', itemClickHandler);
+			item.addEventListener('click', itemClickHandler);
+		});
+	}
+	
+	// 下拉菜单点击处理函数
+	function dropdownClickHandler(e) {
+		e.preventDefault();
+		e.stopPropagation();
+	}
+	
+	// 下拉按钮点击处理函数
+	function toggleClickHandler(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		const dropdown = this.closest('.dropdown');
+		dropdown.classList.toggle('show');
+	}
+	
+	// 文档点击处理函数 - 关闭所有下拉菜单
+	function documentClickHandler() {
+		document.querySelectorAll('.dropdown.show').forEach(dropdown => {
+			dropdown.classList.remove('show');
+		});
+	}
+	
+	// 下拉菜单项点击处理函数
+	function itemClickHandler(e) {
+		e.stopPropagation();
+	}
+</script>

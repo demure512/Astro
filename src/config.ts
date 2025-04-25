@@ -56,6 +56,7 @@ export default {
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '归档', link: '/archives', icon: 'Nav_archives' },
+    { text: '俄语工具', link: '/russian', icon: 'Nav_russian' },
     // { text: 'API', link: 'https://api.vvhan.com/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
