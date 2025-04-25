@@ -2,66 +2,41 @@
 // 页面 Info
 import SITE_CONFIG from "@/config";
 const { Description } = SITE_CONFIG;
-// 公共 Layout
-import Layout from "@/layouts/Layout/Layout.astro";
+// 页面布局
+import PageLayout from "@/layouts/PageLayout/PageLayout.astro";
 // Russian Parser 组件
 import RussianParser from "@/components/RussianParser/RussianParser.astro";
+
+const frontmatter = {
+  title: "歌曲分词器",
+  h1: "俄语歌曲分词器",
+  desc: "解析文本并划分为单词和句子，支持发音",
+  type: "russian",
+  comment: false
+};
 ---
 
-<Layout title="歌曲分词器" description="俄语文本解析工具 - 划分词语和句子，点击听发音和查看翻译" activeNav="russian">
-  <section class="russian-parser-page">
-    <div class="page-header">
-      <h1>歌曲分词器</h1>
-      <ul>
-        <li>解析文本并划分为单词和句子</li>
-        <li>点击句子前的小喇叭图标可听取整句发音</li>
-        <li>支持歌词等多行文本的解析和发音</li>
-      </ul>
-    </div>
-    
+<PageLayout frontmatter={frontmatter}>
+  <div class="russian-parser-page">
     <RussianParser />
     
     <div class="usage-tips">
       <h2>使用提示</h2>
       <ol>
-        <li>在文本框中输入任意外语文本（支持多行歌词）</li>
+        <li>在文本框中输入俄语文本（支持多行歌词）</li>
         <li>点击"解析文本"按钮进行划分</li>
         <li>点击句子旁边的<strong>小喇叭图标</strong>可听取整个句子的发音</li>
         <li>每个句子都有独立的播放按钮，方便逐句学习</li>
       </ol>
       <p class="note">注意：此功能使用浏览器的语音合成 API，发音效果取决于浏览器和系统支持的语音包。翻译功能内置基础词汇，更多词汇将持续更新。</p>
     </div>
-  </section>
-</Layout>
+  </div>
+</PageLayout>
 
 <style>
   .russian-parser-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-  
-  .page-header {
-    margin-bottom: 2rem;
-  }
-  
-  .page-header h1 {
-    margin-bottom: 1rem;
-    color: var(--vh-font-color);
-    font-size: 2rem;
-  }
-  
-  .page-header p {
-    margin-bottom: 0.5rem;
-  }
-  
-  .page-header ul {
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .page-header li {
-    margin-bottom: 0.5rem;
+    width: 100%;
+    padding: 0;
   }
   
   .usage-tips {
@@ -94,7 +69,7 @@ import RussianParser from "@/components/RussianParser/RussianParser.astro";
   
   @media (max-width: 768px) {
     .russian-parser-page {
-      padding: 1rem;
+      padding: 0;
     }
   }
 </style> 

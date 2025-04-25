@@ -1,5 +1,161 @@
 // Initialize Web Speech API
-const synth = window.speechSynthesis;
+let synth;
+try {
+  synth = window.speechSynthesis;
+} catch (e) {
+  console.error('Speech Synthesis API is not available:', e);
+  // Create a fallback synth object with empty methods
+  synth = {
+    speaking: false,
+    cancel: () => {},
+    speak: () => { console.log('Speech synthesis not available'); },
+    getVoices: () => []
+  };
+}
+
+// Speaker SVG icon HTML
+const speakerIconSvg = `<svg class="speaker-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zm5.54 3.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+// Delete icon HTML
+const deleteIconSvg = `<svg class="delete-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+
+// Initialize songs from local storage
+function loadSongs() {
+  try {
+    const savedSongs = localStorage.getItem('russianSongs');
+    return savedSongs ? JSON.parse(savedSongs) : [];
+  } catch (e) {
+    console.error('Error loading songs from local storage:', e);
+    return [];
+  }
+}
+
+// Save songs to local storage
+function saveSongs(songs) {
+  try {
+    localStorage.setItem('russianSongs', JSON.stringify(songs));
+  } catch (e) {
+    console.error('Error saving songs to local storage:', e);
+  }
+}
+
+// Render the song list
+function renderSongList() {
+  try {
+    const songList = document.getElementById('songList');
+    if (!songList) {
+      console.error('Song list element not found');
+      return;
+    }
+    
+    const songs = loadSongs();
+    
+    if (songs.length === 0) {
+      songList.innerHTML = '<p class="empty-message">还没有保存的歌曲</p>';
+      return;
+    }
+    
+    songList.innerHTML = '';
+    
+    songs.forEach((song, index) => {
+      const songElement = document.createElement('div');
+      songElement.className = 'song-item';
+      songElement.innerHTML = `
+        <span class="song-title">${song.title}</span>
+        <span class="song-actions">
+          <button class="play-song-btn" data-index="${index}" aria-label="播放歌曲">${speakerIconSvg}</button>
+          <button class="delete-song-btn" data-index="${index}" aria-label="删除歌曲">${deleteIconSvg}</button>
+        </span>
+      `;
+      songList.appendChild(songElement);
+    });
+    
+    // Add event listeners for song actions
+    document.querySelectorAll('.play-song-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        try {
+          const index = e.currentTarget.getAttribute('data-index');
+          const songs = loadSongs();
+          const song = songs[index];
+          
+          const russianText = document.getElementById('russianText');
+          if (!russianText) return;
+          
+          // Load the song text into the textarea
+          russianText.value = song.text;
+          
+          // Parse the text
+          parseText();
+        } catch (e) {
+          console.error('Error playing song:', e);
+        }
+      });
+    });
+    
+    document.querySelectorAll('.delete-song-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        try {
+          const index = e.currentTarget.getAttribute('data-index');
+          const songs = loadSongs();
+          
+          // Remove the song
+          songs.splice(index, 1);
+          saveSongs(songs);
+          
+          // Update the UI
+          renderSongList();
+        } catch (e) {
+          console.error('Error deleting song:', e);
+        }
+      });
+    });
+  } catch (e) {
+    console.error('Error rendering song list:', e);
+  }
+}
+
+// Function to add a new song
+function addSong(title, text) {
+  try {
+    const songs = loadSongs();
+    
+    // Check if a song with this title already exists
+    const existingIndex = songs.findIndex(song => song.title === title);
+    
+    if (existingIndex >= 0) {
+      // Update existing song
+      songs[existingIndex].text = text;
+    } else {
+      // Add new song
+      songs.push({ title, text });
+    }
+    
+    saveSongs(songs);
+    renderSongList();
+  } catch (e) {
+    console.error('Error adding song:', e);
+  }
+}
+
+// Function to parse text (for play song button)
+function parseText() {
+  try {
+    const russianText = document.getElementById('russianText');
+    if (!russianText) return;
+    
+    const text = russianText.value;
+    
+    if (text.trim().length === 0) {
+      alert('请输入俄语文本');
+      return;
+    }
+    
+    renderWords();
+    renderSentences();
+  } catch (e) {
+    console.error('Error parsing text:', e);
+  }
+}
 
 // Simple Russian-Chinese dictionary for common words
 const russianChineseDict = {
@@ -80,9 +236,6 @@ const russianChineseDict = {
   'работать': '工作'
 };
 
-// Speaker SVG icon HTML
-const speakerIconSvg = `<svg class="speaker-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zm5.54 3.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
-
 // Function to check if a language is available
 function isLanguageAvailable(langCode) {
   const voices = synth.getVoices();
@@ -91,30 +244,59 @@ function isLanguageAvailable(langCode) {
 
 // Function to get Russian voice
 function getRussianVoice() {
-  const voices = synth.getVoices();
-  // First try to find a Russian voice
-  const russianVoice = voices.find(voice => voice.lang.includes('ru-RU'));
-  
-  // If Russian voice exists, return it
-  if (russianVoice) return russianVoice;
-  
-  // Otherwise return the first available voice
-  return voices[0];
+  try {
+    if (!synth || typeof synth.getVoices !== 'function') {
+      console.error('Speech synthesis voices not available');
+      return null;
+    }
+    
+    const voices = synth.getVoices();
+    
+    if (!voices || voices.length === 0) {
+      console.log('No speech synthesis voices available');
+      return null;
+    }
+    
+    // First try to find a Russian voice
+    const russianVoice = voices.find(voice => voice.lang && voice.lang.includes('ru-RU'));
+    
+    // If Russian voice exists, return it
+    if (russianVoice) return russianVoice;
+    
+    // Otherwise return the first available voice
+    return voices[0];
+  } catch (e) {
+    console.error('Error getting voices:', e);
+    return null;
+  }
 }
 
 // Function to speak text in Russian
 function speakRussian(text) {
-  if (synth.speaking) {
-    synth.cancel();
+  try {
+    if (!synth || typeof synth.speaking === 'undefined') {
+      console.error('Speech synthesis not available');
+      return;
+    }
+    
+    if (synth.speaking) {
+      synth.cancel();
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    try {
+      utterance.voice = getRussianVoice();
+      utterance.lang = 'ru-RU';
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      
+      synth.speak(utterance);
+    } catch (e) {
+      console.error('Error when trying to speak:', e);
+    }
+  } catch (e) {
+    console.error('Speech synthesis error:', e);
   }
-  
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = getRussianVoice();
-  utterance.lang = 'ru-RU';
-  utterance.rate = 0.9;
-  utterance.pitch = 1;
-  
-  synth.speak(utterance);
 }
 
 // Function to get Chinese translation for a Russian word
@@ -324,27 +506,131 @@ function renderSentences() {
 
 // Function to initialize the Russian parser
 function initRussianParser() {
-  const parseButton = document.getElementById('parseButton');
-  
-  // Event handler for parse button
-  parseButton.addEventListener('click', () => {
-    const russianText = document.getElementById('russianText');
-    const text = russianText.value;
+  try {
+    // 获取DOM元素
+    const parseButton = document.getElementById('parseButton');
+    const saveButton = document.getElementById('saveButton');
+    const confirmSaveButton = document.getElementById('confirmSaveButton');
+    const cancelSaveButton = document.getElementById('cancelSaveButton');
+    const songInput = document.querySelector('.song-input');
+    const songTitle = document.getElementById('songTitle');
     
-    if (text.trim().length === 0) {
-      alert('请输入俄语文本');
+    if (!parseButton) {
+      console.error('Parse button not found');
       return;
     }
     
-    renderWords();
-    renderSentences();
-  });
-  
-  // Initialize voices list
-  synth.addEventListener('voiceschanged', () => {
-    getRussianVoice();
-  });
+    // 初始化歌曲列表
+    try {
+      renderSongList();
+    } catch (e) {
+      console.error('Error rendering song list:', e);
+    }
+    
+    // Event handler for parse button
+    parseButton.addEventListener('click', () => {
+      try {
+        const russianText = document.getElementById('russianText');
+        if (!russianText) {
+          console.error('Russian text element not found');
+          return;
+        }
+        
+        const text = russianText.value;
+        
+        if (text.trim().length === 0) {
+          alert('请输入俄语文本');
+          return;
+        }
+        
+        renderWords();
+        renderSentences();
+      } catch (e) {
+        console.error('Error parsing text:', e);
+        alert('文本解析出错，请检查浏览器控制台');
+      }
+    });
+    
+    // 保存歌曲相关功能
+    if (saveButton) {
+      saveButton.addEventListener('click', () => {
+        try {
+          const russianText = document.getElementById('russianText');
+          if (!russianText || !songInput) return;
+          
+          if (russianText.value.trim().length === 0) {
+            alert('请先输入文本再保存');
+            return;
+          }
+          
+          // Show the song input form
+          songInput.style.display = 'flex';
+          if (songTitle) songTitle.focus();
+        } catch (e) {
+          console.error('Error saving song:', e);
+        }
+      });
+    }
+    
+    if (confirmSaveButton) {
+      confirmSaveButton.addEventListener('click', () => {
+        try {
+          const russianText = document.getElementById('russianText');
+          if (!russianText || !songTitle || !songInput) return;
+          
+          const title = songTitle.value.trim();
+          const text = russianText.value.trim();
+          
+          if (title.length === 0) {
+            alert('请输入歌曲名称');
+            return;
+          }
+          
+          // Save the song
+          addSong(title, text);
+          
+          // Hide the song input form
+          songInput.style.display = 'none';
+          songTitle.value = '';
+        } catch (e) {
+          console.error('Error confirming song save:', e);
+        }
+      });
+    }
+    
+    if (cancelSaveButton) {
+      cancelSaveButton.addEventListener('click', () => {
+        try {
+          if (!songInput || !songTitle) return;
+          // Hide the song input form
+          songInput.style.display = 'none';
+          songTitle.value = '';
+        } catch (e) {
+          console.error('Error canceling song save:', e);
+        }
+      });
+    }
+    
+    // Initialize voices list if Speech Synthesis is available
+    if (synth && typeof synth.addEventListener === 'function') {
+      try {
+        synth.addEventListener('voiceschanged', () => {
+          getRussianVoice();
+        });
+      } catch (e) {
+        console.error('Error setting up speech synthesis:', e);
+      }
+    }
+  } catch (e) {
+    console.error('Error initializing Russian parser:', e);
+  }
 }
 
 // Initialize the parser when the document is loaded
-document.addEventListener('DOMContentLoaded', initRussianParser); 
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    initRussianParser();
+  } catch (e) {
+    console.error('Error loading Russian parser:', e);
+  }
+}); 
