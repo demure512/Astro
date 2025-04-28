@@ -62,6 +62,19 @@
 [![vhAstro-Theme](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/demure512/Astro)
 
 
+###标签管理
+```自定义替换Code
+&.vh-cat-Code {
+                /* 默认渐变色起始 */
+                --gradient-color-1: #f48600;
+                /* 默认渐变色中间 */
+                --gradient-color-2: #ffa12e;
+                /* 默认渐变色结束 */
+                --gradient-color-3: #ffe9c9;
+              }
+```
+
+
 ### 本地开发
 
 ```bash

@@ -1,6 +1,6 @@
 ---
 title: "Astro主题-优雅的vhAstro-Theme【使用文档】"
-categories: Code
+categories: Tutorial
 tags: ["Astro", "主题", "博客", "vhAstro", "vhAstro-Theme"]
 id: "astro-theme-vhastro-theme"
 date: 2025-1-02 18:18:18
@@ -59,6 +59,19 @@ recommend: true
 - [x] 广泛的现代框架兼容性
 - [x] 高效的性能优化
 - [x] 优秀的开发体验
+
+
+### 标签管理
+```自定义替换Code
+&.vh-cat-Code {
+                /* 默认渐变色起始 */
+                --gradient-color-1: #f48600;
+                /* 默认渐变色中间 */
+                --gradient-color-2: #ffa12e;
+                /* 默认渐变色结束 */
+                --gradient-color-3: #ffe9c9;
+              }
+```
 
 
 ### 说说动态

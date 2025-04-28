@@ -68,13 +68,13 @@ export default async (filename: string | null | undefined) => {
   if (filename && filename.trim() !== '') {
     return filename;
   }
-  // 否则随机选择一个banner图片
+  // 否则随机选择一个Li图片
   try {
     const { value } = await fileIter.next();
-    return `/assets/images/banner/${value}`;
+    return `/assets/images/LiImg/${value}`;
   } catch (error) {
     console.error('获取随机图片失败:', error);
     // 如果出错，返回默认图片
-    return '/assets/images/banner/home-banner.webp';
+    return '/assets/images/LiImg/home-banner.webp';
   }
 }
