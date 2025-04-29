@@ -57,7 +57,7 @@ async function* createImageIterator(dir: string) {
   }
 }
 
-const targetDir = path.resolve(__dirname, '../../public/assets/images/banner/'); // 目标目录
+const targetDir = path.resolve(__dirname, '../../public/assets/images/LiImg/'); // 目标目录
 const fileIter = createImageIterator(targetDir);
 export default async (filename: string | null | undefined) => {
   // 如果提供了有效的URL，直接返回

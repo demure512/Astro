@@ -17,13 +17,13 @@ type: "about"
 :::
 
 
-**在 Web 开发方面**，我深耕 Vue.js 生态，并且关注了现代 CSS 框架如 Tailwind CSS。同时，对前端构建工具如 Webpack、Rollup 和 Vite 以及代码质量和规范工具如 ESLint 进行了研究，我还关注了前端性能优化，例如代码分割、资源加载策略以及 Astro、Hexo 等现代网站构建工具的使用。
+**⌨️ 在 Web 开发方面**，我深耕 Vue.js 生态，并且关注了现代 CSS 框架如 Tailwind CSS。同时，对前端构建工具如 Webpack、Rollup 和 Vite 以及代码质量和规范工具如 ESLint 进行了研究，我还关注了前端性能优化，例如代码分割、资源加载策略以及 Astro、Hexo 等现代网站构建工具的使用。
 
-**在后端开发和云计算领域**，我对 Node.js、JAVA 生态系统非常熟悉，并积极探索 Serverless、SpringBoot 架构。我长期使用 Cloudflare Workers、Vercel 和腾讯云 EdgeOne 等平台，优化边缘计算、KV 存储和全球 CDN 加速方案，确保应用的高可用性和低延迟。
+**☁️ 在后端开发和云计算领域**，我对 Node.js、JAVA 生态系统非常熟悉，并积极探索 Serverless、SpringBoot 架构。我长期使用 Cloudflare Workers、Vercel 和腾讯云 EdgeOne 等平台，优化边缘计算、KV 存储和全球 CDN 加速方案，确保应用的高可用性和低延迟。
 
-**在游戏开发领域**，我专注于 Unity 引擎 和 C# 编程，深入研究了游戏物理、动画系统、Shader 编写以及性能优化。同时，熟练使用 Blender 进行 3D 建模，并掌握 Photoshop 进行贴图绘制与 UI 设计。此外，关注现代游戏开发工具链，如 Unreal Engine 的蓝图系统、Substance Painter 材质制作，以及 Git 版本控制和 Jenkins 自动化构建流程，致力于打造高质量、高性能的游戏体验。
+**🕹️ 在游戏开发领域**，我专注于 Unity 引擎 和 C# 编程，深入研究了游戏物理、动画系统、Shader 编写以及性能优化。同时，熟练使用 Blender 进行 3D 建模，并掌握 Photoshop 进行贴图绘制与 UI 设计。此外，关注现代游戏开发工具链，如 Unreal Engine 的蓝图系统、Substance Painter 材质制作，以及 Git 版本控制和 Jenkins 自动化构建流程，致力于打造高质量、高性能的游戏体验。
 
-**在人工智能与大型语言模型（LLMs）领域**，我密切关注 AI 领域的发展，尤其是 DeepSeek、Gemini 和 Claude 等大模型的应用。我尝试将 AI 能力整合到开发流程中，例如自动化文档生成、代码优化辅助，并且对 多模态交互（如 LLaVA、GPT-4V） 和 AI 原生应用设计 保持高度敏感，致力于通过 AI 技术提升研发效率与产品智能化水平。
+**🤖 在人工智能与大型语言模型（LLMs）领域**，我密切关注 AI 领域的发展，尤其是 DeepSeek、Gemini 和 Claude 等大模型的应用。我尝试将 AI 能力整合到开发流程中，例如自动化文档生成、代码优化辅助，并且对 多模态交互（如 LLaVA、GPT-4V） 和 AI 原生应用设计 保持高度敏感，致力于通过 AI 技术提升研发效率与产品智能化水平。
 
 
 **🚀 技术理念**

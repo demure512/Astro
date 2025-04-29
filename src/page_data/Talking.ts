@@ -5,6 +5,13 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      "date": "2025-04-29 18:35:50",
+      "tags": [
+        "日常"
+      ],
+      "content": "懒得找图片了，直接写个随机获取指定目录图片，给大家看看我老公美颜算了。😝EVERYDAYISADIFFERENT~"
+    },
+    {
       "date": "2025-04-25 15:30:11",
       "tags": [
         "哪里不会点哪里",
