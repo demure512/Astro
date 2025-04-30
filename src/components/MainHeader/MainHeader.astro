@@ -1,12 +1,28 @@
 ---
 import SITE_INFO from "@/config";
+import { getRandomCover } from "@/utils/randomCover"; 
 import "./MainHeader.less";
+
+// Get a random cover image
+const randomCoverUrl = getRandomCover();
+
+// Determine if we're on the homepage
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
+
+// Create dynamic background style with the random image for the homepage
+const dynamicBackground = isHome ? 
+  `background: url('${randomCoverUrl}') no-repeat center 60%/cover` : 
+  null;
 ---
 
-<div class="header-main">
+<div class="header-main" style={dynamicBackground}>
 	<div class="avatar">
 		<img src="/assets/images/lazy-loading.webp" data-vh-lz-src={SITE_INFO.Avatar} alt="avatar" />
 	</div>
 	<h3 class="auther">{SITE_INFO.Author || "-"}</h3>
 	<p class="desc"></p>
 </div>
+
+<style define:vars={{ randomCoverUrl }}>
+  /* Additional styling can be added here if needed */
+</style>

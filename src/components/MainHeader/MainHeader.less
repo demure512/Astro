@@ -10,14 +10,20 @@
   height: var(--vh-main-header-height);
   transition: height 0.58s ease-in-out;
   z-index: 1;
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: var(--vh-home-banner);
-    z-index: -1;
+  /* Only apply the background from CSS variable if no inline style is set */
+  &:not([style*="background"]) {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: var(--vh-home-banner);
+      z-index: -1;
+    }
   }
 
   &>.avatar {

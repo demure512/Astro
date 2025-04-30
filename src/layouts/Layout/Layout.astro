@@ -4,6 +4,11 @@ const { title, keywords, description, pagecover, activeNav, Home } = Astro.props
 import SITE_INFO from "@/config";
 const { GoogleAds, Theme, HomeBanner } = SITE_INFO;
 const { ad_Client, asideAD_Slot, articleAD_Slot } = GoogleAds;
+
+// Determine if we're on the homepage to control banner background settings
+const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
+const setGlobalBannerBg = !isHomePage; // Only set global banner background on non-home pages
+
 // Head 依赖
 import Head from "@/components/Head/Head.astro";
 // 顶部 Header
@@ -36,7 +41,7 @@ import "./Layout.less";
 		<Fragment
 			set:html={`<style>:root {${Object.entries(Theme)
 				.map(([key, value]) => `${key}:${value};`)
-				.join("")}--vh-main-header-height:${Home ? HomeBanner.HomeHeight : HomeBanner.PageHeight};--vh-home-banner:${HomeBanner.background}}</style>`}
+				.join("")}--vh-main-header-height:${Home ? HomeBanner.HomeHeight : HomeBanner.PageHeight};${setGlobalBannerBg ? `--vh-home-banner:${HomeBanner.background}` : ''}}</style>`}
 		/>
 	</Head>
 	<body>

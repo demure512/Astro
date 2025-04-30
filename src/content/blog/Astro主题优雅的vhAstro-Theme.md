@@ -62,7 +62,7 @@ recommend: true
 
 
 ### 标签管理
-```自定义替换Code
+```
 &.vh-cat-Code {
                 /* 默认渐变色起始 */
                 --gradient-color-1: #f48600;

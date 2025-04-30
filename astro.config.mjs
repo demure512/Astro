@@ -41,7 +41,21 @@ export default defineConfig({
 		remarkPlugins: [remarkMath, remarkDirective, remarkNote,],
 		rehypePlugins: [rehypeKatex, rehypeSlug, addClassNames],
 		syntaxHighlight: 'shiki',
-		shikiConfig: { theme: 'github-light' },
+		shikiConfig: { 
+			theme: 'github-light',
+			langs: [],
+			transformers: [
+				{
+					pre(node) {
+						// Set default language to plaintext if none specified or not recognized
+						const lang = node.properties.className?.[0]?.replace(/^language-/, '') || 'plaintext';
+						if (!lang || lang === 'plaintext') {
+							node.properties.className = ['language-plaintext'];
+						}
+					}
+				}
+			]
+		},
 	},
 	vite: { resolve: { alias: { "@": path.resolve(__dirname, "./src") } } },
 	server: { host: '0.0.0.0' }
