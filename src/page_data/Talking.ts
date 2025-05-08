@@ -5,6 +5,13 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      "date": "2025-05-08 13:36:45",
+      "tags": [
+        "日常"
+      ],
+      "content": "test一下一键上传脚本"
+    },
+    {
       "date": "2025-05-08 13:29:34",
       "tags": [
         "日常"
