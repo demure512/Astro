@@ -5,6 +5,13 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      "date": "2025-05-08 13:29:34",
+      "tags": [
+        "日常"
+      ],
+      "content": "哈基饭！你这家伙，好久没吃到糙米饭啦！bit flashing <div class=\"vh-img-flex\"><img src=\"https://wp-cdn.4ce.cn/v2/NPofZc4.jpeg\"></div>"
+    },
+    {
       "date": "2025-05-07 16:41:07",
       "tags": [
         "日常"
