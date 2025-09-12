@@ -86,7 +86,7 @@ npm dev
 npm build
 # 创建新文章
 npm run newpost '文章标题'
-# 创建新东泰
+# 创建新动态
 npm run newtalk '动态内容'
 ```
 
